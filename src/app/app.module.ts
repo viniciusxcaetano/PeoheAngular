@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+
 import { HomeComponent } from './view/home/home.component';
 import { AppTopBarComponent } from './layout/app.topbar.component';
 import { AppSideBarComponent } from './layout/app.sidebar.component';
@@ -27,4 +28,5 @@ import { AppSideBarComponent } from './layout/app.sidebar.component';
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

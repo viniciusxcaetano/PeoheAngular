@@ -29,9 +29,9 @@ export class AttendanceComponent implements OnInit {
     });
 
     this.genders = [];
-    this.genders.push({ label: 'Select Gender', value: '' });
-    this.genders.push({ label: 'Male', value: 'Male' });
-    this.genders.push({ label: 'Female', value: 'Female' });
+    this.genders.push({ label: 'Selecione o gênero', value: '' });
+    this.genders.push({ label: 'Masculino', value: 'Male' });
+    this.genders.push({ label: 'Feminino', value: 'Female' });
   }
 
   onSubmit(value: string) {

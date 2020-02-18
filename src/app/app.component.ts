@@ -18,5 +18,4 @@ export class AppComponent {
     this.mobileMenuActive = false;
     event.preventDefault();
   }
-
 }

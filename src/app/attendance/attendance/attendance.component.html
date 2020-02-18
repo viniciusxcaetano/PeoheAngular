@@ -8,7 +8,7 @@
                     First Name *:
                 </div>
                 <div class="ui-grid-col-6">
-                    <input pInputText type="text" formControlName="firstname" placeholder="Required" />
+                    <input pInputText type="text" formControlName="firstname" placeholder="Obrigatório" />
                 </div>
                 <div class="ui-grid-col-4">
                     <p-message severity="error" text="Firstname is required" *ngIf="!userform.controls['firstname'].valid&&userform.controls['firstname'].dirty"></p-message>
@@ -19,7 +19,7 @@
                     Last Name *:
                 </div>
                 <div class="ui-grid-col-6">
-                    <input pInputText type="text" formControlName="lastname" placeholder="Required" />
+                    <input pInputText type="text" formControlName="lastname" placeholder="Obrigatório" />
                 </div>
                 <div class="ui-grid-col-4">
                     <p-message severity="error" text="Lastname is required" *ngIf="!userform.controls['lastname'].valid&&userform.controls['lastname'].dirty"></p-message>
@@ -30,7 +30,7 @@
                     Password *:
                 </div>
                 <div class="ui-grid-col-6">
-                    <input pInputText type="password" formControlName="password" placeholder="Required - Min(6)" />
+                    <input pInputText type="password" formControlName="password" placeholder="Obrigatório - Min(6)" />
                 </div>
                 <div class="ui-grid-col-4">
                     <p-message severity="error" [text]="userform.controls['password'].errors['required'] ? 'Password is required' : userform.controls['password'].errors['minlength'] ? 'Must be longer than 6 characters' : ''" *ngIf="!userform.controls['password'].valid&&userform.controls['password'].dirty"></p-message>

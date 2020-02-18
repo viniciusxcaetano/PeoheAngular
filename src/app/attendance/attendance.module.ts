@@ -1,11 +1,12 @@
 import { NgModule } from "@angular/core";
-import { AttendanceService } from './attendance.service';
-import { AttendanceListComponent } from './attendance-list/attendance-list.component';
-import { AttendanceComponent } from './attendance/attendance.component';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { AttendanceDetailComponent } from './attendance-detail/attendance-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { AttendanceListComponent } from './attendance-list/attendance-list.component';
+import { AttendanceDetailComponent } from './attendance-detail/attendance-detail.component';
+import { AttendanceService } from './attendance.service';
+import { AttendanceComponent } from './attendance/attendance.component';
 
 import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
@@ -41,4 +42,5 @@ const routes: Routes = [{ path: '', component: AttendanceComponent }];
   declarations: [AttendanceComponent, AttendanceDetailComponent, AttendanceListComponent, AttendanceDetailComponent],
   providers: [AttendanceService]
 })
+
 export class AttendanceModule { }
