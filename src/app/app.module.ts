@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './view/home/home.component';
 import { AppTopBarComponent } from './layout/app.topbar.component';
 import { AppSideBarComponent } from './layout/app.sidebar.component';
+import { RepositoryService } from './shared/repository.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AppSideBarComponent } from './layout/app.sidebar.component';
     HttpClientModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [
+    RepositoryService],
   bootstrap: [AppComponent]
 })
 

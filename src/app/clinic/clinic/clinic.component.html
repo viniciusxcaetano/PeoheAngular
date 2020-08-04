@@ -1,0 +1,69 @@
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+
+<form [formGroup]="userform" (ngSubmit)="onSubmit(userform.value)">
+  <p-panel header="Validate">
+    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          Nome da Clínica *:
+        </div>
+        <div class="ui-grid-col-6">
+          <input pInputText type="text" formControlName="Name" placeholder="Obrigatório" />
+        </div>
+        <div class="ui-grid-col-4">
+          <p-message severity="error" text="Por favor, insira o nome"
+            *ngIf="!userform.controls['Name'].valid&&userform.controls['Name'].dirty"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          Telefone:
+        </div>
+        <div class="ui-grid-col-6">
+          <input pInputText type="text" formControlName="Phone" />
+        </div>
+      </div>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          Endereço:
+        </div>
+        <div class="ui-grid-col-6">
+          <input pInputText type="Address" formControlName="Address" />
+        </div>
+        <div class="ui-grid-col-4"></div>
+      </div>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          Observações:
+        </div>
+        <div class="ui-grid-col-6">
+          <textarea pInputTextarea type="text" formControlName="Comments"></textarea>
+        </div>
+        <div class="ui-grid-col-4"></div>
+      </div>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          Porcentagem padrão:
+        </div>
+        <div class="ui-grid-col-6">
+          <input pInputText type="number" min="0" max="100" formControlName="percentage" placeholder="%" />
+        </div>
+        <div class="ui-grid-col-4">
+          <p-message severity="error" text="Valor entre 0 à 100"
+            *ngIf="!userform.controls['percentage'].valid&&userform.controls['percentage'].dirty"></p-message>
+        </div>
+      </div>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2"></div>
+        <div class="ui-grid-col-6">
+          <button pButton type="submit" label="Salvar" [disabled]="!userform.valid"></button>
+        </div>
+        <div class="ui-grid-col-4"></div>
+      </div>
+      <div style="text-align:center;margin-top:20px" *ngIf="submitted">
+        Form Submitted
+        
+      </div>
+    </div>
+  </p-panel>
+</form>

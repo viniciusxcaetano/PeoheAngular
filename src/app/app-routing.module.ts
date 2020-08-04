@@ -9,6 +9,7 @@ const routes: Routes = [];
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'attendance', loadChildren: () => import('./attendance/attendance.module').then(m => m.AttendanceModule) },
+      { path: 'clinic', loadChildren: () => import('./clinic/clinic.module').then(m => m.ClinicModule) },
 
     ], { scrollPositionRestoration: 'enabled' })
   ],
