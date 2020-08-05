@@ -8,11 +8,11 @@
           Nome da Clínica *:
         </div>
         <div class="ui-grid-col-6">
-          <input pInputText type="text" formControlName="Name" placeholder="Obrigatório" />
+          <input pInputText type="text" formControlName="name" placeholder="Obrigatório" />
         </div>
         <div class="ui-grid-col-4">
           <p-message severity="error" text="Por favor, insira o nome"
-            *ngIf="!userform.controls['Name'].valid&&userform.controls['Name'].dirty"></p-message>
+            *ngIf="!userform.controls['name'].valid&&userform.controls['name'].dirty"></p-message>
         </div>
       </div>
       <div class="ui-grid-row">
@@ -20,7 +20,7 @@
           Telefone:
         </div>
         <div class="ui-grid-col-6">
-          <input pInputText type="text" formControlName="Phone" />
+          <input pInputText type="text" formControlName="phone" />
         </div>
       </div>
       <div class="ui-grid-row">
@@ -28,7 +28,7 @@
           Endereço:
         </div>
         <div class="ui-grid-col-6">
-          <input pInputText type="Address" formControlName="Address" />
+          <input pInputText type="address" formControlName="address" />
         </div>
         <div class="ui-grid-col-4"></div>
       </div>
@@ -37,7 +37,7 @@
           Observações:
         </div>
         <div class="ui-grid-col-6">
-          <textarea pInputTextarea type="text" formControlName="Comments"></textarea>
+          <textarea pInputTextarea type="text" formControlName="comments"></textarea>
         </div>
         <div class="ui-grid-col-4"></div>
       </div>
@@ -59,10 +59,6 @@
           <button pButton type="submit" label="Salvar" [disabled]="!userform.valid"></button>
         </div>
         <div class="ui-grid-col-4"></div>
-      </div>
-      <div style="text-align:center;margin-top:20px" *ngIf="submitted">
-        Form Submitted
-        
       </div>
     </div>
   </p-panel>

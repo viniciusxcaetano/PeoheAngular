@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SelectItem, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { RepositoryService } from 'src/app/shared/repository.service';
 import { Clinic } from 'src/app/model/Clinic';
 import { ClinicService } from '../clinic.service';
-
 
 @Component({
   selector: 'app-clinic',
@@ -13,19 +11,16 @@ import { ClinicService } from '../clinic.service';
 })
 export class ClinicComponent implements OnInit {
 
-  userform: FormGroup;
-  submitted: boolean;
-
-
   constructor(private clinicService: ClinicService, private fb: FormBuilder, private messageService: MessageService) { }
 
+  userform: FormGroup;
+
   ngOnInit() {
-    //this.newClinic = new Clinic();
     this.userform = this.fb.group({
-      'Name': new FormControl('', Validators.required),
-      'Phone': new FormControl(''),
-      'Address': new FormControl(''),
-      'Comments': new FormControl(''),
+      'name': new FormControl('', Validators.required),
+      'phone': new FormControl(''),
+      'address': new FormControl(''),
+      'comments': new FormControl(''),
       'percentage': new FormControl('', [Validators.max(100), Validators.min(0)])
     });
   }
@@ -36,14 +31,5 @@ export class ClinicComponent implements OnInit {
     this.clinicService.createClinic(newClinic).subscribe(response => {
       this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Salvo com sucesso!' });
     })
-
-    //this.submitted = true;
   }
-
-  get diagnostic() {
-
-    //return JSON.stringify(this.userform.value);
-    return
-  }
-
 }
