@@ -1,65 +1,112 @@
-<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<div class="content-section implementation">
+  <p-toast></p-toast>
 
-<form [formGroup]="userform" (ngSubmit)="onSubmit(userform.value)">
-  <p-panel header="Validate">
-    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-2">
-          Nome da Clínica *:
+  <div class="card">
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Importar"
+          class="p-mr-2 p-d-inline-block"></p-fileUpload>
+        <button pButton pRipple label="Exportar" icon="pi pi-upload" class="p-button-help"></button>
+      </ng-template>
+
+      <ng-template pTemplate="right">
+        <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-success p-mr-2"
+          (click)="openNew()"></button>
+        <button pButton pRipple icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedClinics()"
+          [disabled]="!selectedClinics || !selectedClinics.length"></button>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="clinics" [rows]="10" [paginator]="true"
+      [globalFilterFields]="['name','country.name','representative.name','status']" [(selection)]="selectedClinics"
+      [rowHover]="true" dataKey="clinicId"
+      currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} clínicas"
+      [showCurrentPageReport]="true">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <h5 class="p-m-0">Clínicas</h5>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+              placeholder="Procurar..." />
+          </span>
         </div>
-        <div class="ui-grid-col-6">
-          <input pInputText type="text" formControlName="name" placeholder="Obrigatório" />
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th pSortableColumn="name">Nome <p-sortIcon field="name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="percentage">Porcentagem <p-sortIcon field="percentage"></p-sortIcon>
+          </th>
+          <th>Telefone</th>
+          <th>Endereço</th>
+          <th>Observações</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-clinic>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="clinic"></p-tableCheckbox>
+          </td>
+          <td>{{clinic.name}}</td>
+          <td>{{clinic.percentage}}</td>
+          <td>{{clinic.phone}}</td>
+          <td>{{clinic.address}}</td>
+          <td>{{clinic.comments}}</td>
+          <td>
+            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+              (click)="editClinic(clinic)"></button>
+            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+              (click)="deleteClinic(clinic)"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          Existem {{clinics ? clinics.length : 0 }} clínicas cadastradas.
         </div>
-        <div class="ui-grid-col-4">
-          <p-message severity="error" text="Por favor, insira o nome"
-            *ngIf="!userform.controls['name'].valid&&userform.controls['name'].dirty"></p-message>
+      </ng-template>
+    </p-table>
+  </div>
+  <!-- Novo ou editar -->
+  <p-dialog [(visible)]="clinicDialog" [style]="{width: '450px'}" header="Detalhes da Clínica" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+      <div class="p-field">
+        <label for="name">Nome</label>
+        <input type="text" pInputText id="name" [(ngModel)]="clinic.name" required autofocus />
+        <small class="p-invalid" *ngIf="submitted && !clinic.name">Nome é obrigatório.</small>
+      </div>
+      <div class="p-formgrid p-grid">
+        <div class="p-field p-col">
+          <label for="percentage">Porcentagem Padrão</label>
+          <p-inputNumber id="percentage" [(ngModel)]="clinic.percentage">
+          </p-inputNumber>
+        </div>
+        <div class="p-field p-col">
+          <label for="phone">Telefone</label>
+          <input type="text" pInputText id="phone" [(ngModel)]="clinic.phone" />
         </div>
       </div>
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-2">
-          Telefone:
-        </div>
-        <div class="ui-grid-col-6">
-          <input pInputText type="text" formControlName="phone" />
-        </div>
+      <div class="p-field">
+        <label for="address">Endereço</label>
+        <textarea id="address" pInputTextarea [(ngModel)]="clinic.address" required rows="2" cols="20"></textarea>
       </div>
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-2">
-          Endereço:
-        </div>
-        <div class="ui-grid-col-6">
-          <input pInputText type="address" formControlName="address" />
-        </div>
-        <div class="ui-grid-col-4"></div>
+      <div class="p-field">
+        <label for="comments">Observação</label>
+        <textarea id="comments" pInputTextarea [(ngModel)]="clinic.comments" required rows="3" cols="20"></textarea>
       </div>
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-2">
-          Observações:
-        </div>
-        <div class="ui-grid-col-6">
-          <textarea pInputTextarea type="text" formControlName="comments"></textarea>
-        </div>
-        <div class="ui-grid-col-4"></div>
-      </div>
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-2">
-          Porcentagem padrão:
-        </div>
-        <div class="ui-grid-col-6">
-          <input pInputText type="number" min="0" max="100" formControlName="percentage" placeholder="%" />
-        </div>
-        <div class="ui-grid-col-4">
-          <p-message severity="error" text="Valor entre 0 à 100"
-            *ngIf="!userform.controls['percentage'].valid&&userform.controls['percentage'].dirty"></p-message>
-        </div>
-      </div>
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-2"></div>
-        <div class="ui-grid-col-6">
-          <button pButton type="submit" label="Salvar" [disabled]="!userform.valid"></button>
-        </div>
-        <div class="ui-grid-col-4"></div>
-      </div>
-    </div>
-  </p-panel>
-</form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+      <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text" (click)="saveClinic()"></button>
+    </ng-template>
+  </p-dialog>
+
+  <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+</div>

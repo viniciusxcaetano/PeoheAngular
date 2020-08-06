@@ -8,11 +8,14 @@ export class Clinic {
         Object.assign(this, init);
     }
 
-    clinidId: string;
-    name: string;
-    percentage: number; 
-    clinicDoctors: Array<ClinicDoctor>;
-    attendances: Array<Attendance>;
-    deleted: Date;
-    user: ApplicationUser;
+    clinidId?: string;
+    name?: string;
+    percentage?: number; 
+    phone?: string;
+    address?: string;
+    comments?: string;
+    clinicDoctors?: Array<ClinicDoctor>;
+    attendances?: Array<Attendance>;
+    deleted?: Date;
+    user?: ApplicationUser;
 }

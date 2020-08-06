@@ -12,12 +12,13 @@ export class RepositoryService {
   constructor(private http: HttpClient) { }
 
   public getData(route: string) {
-    return this.http.get(this.createCompleteRoute(route));
+    let test = this.http.get<any>(this.createCompleteRoute(route));
+    return test;
   }
 
   public create(route: string, body) {
     let test = this.createCompleteRoute(route);
-    let responsee =this.http.post<any>(this.createCompleteRoute(route), body);
+    let responsee = this.http.post<any>(this.createCompleteRoute(route), body);
     return responsee;
   }
   // public create(route: string, body) {
