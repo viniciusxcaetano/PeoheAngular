@@ -12,26 +12,28 @@ export class ClinicService {
 
   constructor(private webService: RepositoryService, private http: HttpClient) { }
 
-  createClinic(entity: Clinic): Observable<Clinic> {
-
-    const route = 'Clinic/CreateClinic';
-    return this.webService.create(route, entity);
-  }
-
-  load(): void {
-    this.getClinics().subscribe(result => {
-      this.clinicList = result;
-    },
-      err => {
-        console.error('error loading', err);
-        let erro = err;
-      }
-    )
-  }
-
   getClinics(): Observable<Clinic[]> {
     const route = 'Clinic/GetClinics';
     return this.webService.getData(route);
   }
 
+  createClinic(entity: Clinic): Observable<Clinic> {
+    const route = 'Clinic/CreateClinic';
+    return this.webService.create(route, entity);
+  }
+
+  updateClinic(entity: Clinic): Observable<Clinic> {
+    const route = 'Clinic/UpdateClinic';
+    return this.webService.update(route, entity);
+  }
+
+  deleteClinic(id: string): Observable<Clinic> {
+    const route = `Clinic/DeleteClinic?id=${id}`;
+    return this.webService.getData(route);
+  }
+
+  deleteClinics(entities: string[]): Observable<Clinic[]> {
+    const route = 'Clinic/DeleteClinics';
+    return this.webService.update(route, entities);
+  }
 }

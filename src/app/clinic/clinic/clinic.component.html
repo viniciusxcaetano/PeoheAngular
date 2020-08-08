@@ -16,12 +16,11 @@
           [disabled]="!selectedClinics || !selectedClinics.length"></button>
       </ng-template>
     </p-toolbar>
-
     <p-table #dt [value]="clinics" [rows]="10" [paginator]="true"
       [globalFilterFields]="['name','country.name','representative.name','status']" [(selection)]="selectedClinics"
       [rowHover]="true" dataKey="clinicId"
-      currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} clínicas"
-      [showCurrentPageReport]="true">
+      currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} clínicas" [showCurrentPageReport]="true"
+      [resizableColumns]="true" [autoLayout]="true">
       <ng-template pTemplate="caption">
         <div class="p-d-flex p-ai-center p-jc-between">
           <h5 class="p-m-0">Clínicas</h5>
@@ -39,12 +38,12 @@
           </th>
           <th pSortableColumn="name">Nome <p-sortIcon field="name"></p-sortIcon>
           </th>
-          <th pSortableColumn="percentage">Porcentagem <p-sortIcon field="percentage"></p-sortIcon>
+          <th class="no-white-space" pSortableColumn="percentage">Porcentagem <p-sortIcon field="percentage"></p-sortIcon>
           </th>
-          <th>Telefone</th>
-          <th>Endereço</th>
-          <th>Observações</th>
-          <th></th>
+          <th class="no-white-space">Telefone</th>
+          <th class="no-white-space">Endereço</th>
+          <th class="no-white-space">Observações</th>
+          <th class="no-white-space"></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-clinic>
@@ -72,6 +71,7 @@
       </ng-template>
     </p-table>
   </div>
+
   <!-- Novo ou editar -->
   <p-dialog [(visible)]="clinicDialog" [style]="{width: '450px'}" header="Detalhes da Clínica" [modal]="true"
     styleClass="p-fluid">

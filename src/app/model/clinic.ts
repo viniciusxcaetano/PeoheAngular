@@ -8,7 +8,7 @@ export class Clinic {
         Object.assign(this, init);
     }
 
-    clinidId?: string;
+    clinicId?: string;
     name?: string;
     percentage?: number; 
     phone?: string;

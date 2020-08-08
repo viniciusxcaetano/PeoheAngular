@@ -29,8 +29,7 @@ export class ClinicComponent implements OnInit {
   constructor(private clinicService: ClinicService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
-    this.clinicService.load();
-    this.clinics = this.clinicService.clinicList;
+    this.getClinics();
   }
 
   openNew() {
@@ -45,6 +44,7 @@ export class ClinicComponent implements OnInit {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+        this.clinicService.deleteClinics(this.selectedClinics.map(c => c.clinicId)).subscribe();
         this.clinics = this.clinics.filter(val => !this.selectedClinics.includes(val));
         this.selectedClinics = null;
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Clínicas excluídas', life: 3000 });
@@ -63,7 +63,8 @@ export class ClinicComponent implements OnInit {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangule',
       accept: () => {
-        this.clinics = this.clinics.filter(val => val.clinidId !== clinic.clinidId);
+        this.clinicService.deleteClinic(clinic.clinicId).subscribe();
+        this.clinics = this.clinics.filter(val => val.clinicId !== clinic.clinicId);
         this.clinic = {};
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Clínica excluída', life: 3000 });
       }
@@ -79,11 +80,17 @@ export class ClinicComponent implements OnInit {
     this.submitted = true;
 
     if (this.clinic.name.trim()) {
-      if (this.clinic.clinidId) {
-        this.clinics[this.findIndexById(this.clinic.clinidId)] = this.clinic;
+      if (this.clinic.clinicId) {
+        this.clinicService.updateClinic(this.clinic).subscribe(clinic => (this.clinic = clinic));
+        const index = this.clinic ? this.clinics.findIndex(h => h.clinicId === this.clinic.clinicId) : -1;
+
+        if (index > -1) {
+          this.clinics[index] = this.clinic;
+        }
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Clínica Atualizada', life: 3000 });
       }
       else {
+        this.clinicService.createClinic(this.clinic).subscribe(clinic => (this.clinic = clinic));
         this.clinics.push(this.clinic);
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Clínica Criada', life: 3000 });
       }
@@ -93,14 +100,7 @@ export class ClinicComponent implements OnInit {
     }
   }
 
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.clinics.length; i++) {
-      if (this.clinics[i].clinidId === id) {
-        index = i;
-        break;
-      }
-    }
-    return index;
+  getClinics(): void {
+    this.clinicService.getClinics().subscribe(clinics => (this.clinics = clinics));
   }
 }
