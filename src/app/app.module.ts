@@ -11,6 +11,12 @@ import { AppTopBarComponent } from './layout/app.topbar.component';
 import { AppSideBarComponent } from './layout/app.sidebar.component';
 import { RepositoryService } from './shared/repository.service';
 
+import { PanelModule } from 'primeng/panel';
+import { ToastModule } from 'primeng/toast';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { MenuModule } from 'primeng/menu';
+import { ButtonModule } from 'primeng/button';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,14 +26,17 @@ import { RepositoryService } from './shared/repository.service';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule,
+
+    //AppTopBarComponent
+    MenuModule
+
   ],
-  providers: [
-    RepositoryService],
+  providers: [RepositoryService],
   bootstrap: [AppComponent]
 })
 

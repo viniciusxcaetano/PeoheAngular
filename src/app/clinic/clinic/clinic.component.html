@@ -2,6 +2,7 @@
   <p-toast></p-toast>
 
   <div class="card">
+    <!-- style="transform: scale(0.8); -->
     <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">
         <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Importar"
@@ -20,7 +21,7 @@
       [globalFilterFields]="['name','country.name','representative.name','status']" [(selection)]="selectedClinics"
       [rowHover]="true" dataKey="clinicId"
       currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} clínicas" [showCurrentPageReport]="true"
-      [resizableColumns]="true" [autoLayout]="true">
+      [resizableColumns]="true" [autoLayout]="true" tableStyleClass="prime-table">
       <ng-template pTemplate="caption">
         <div class="p-d-flex p-ai-center p-jc-between">
           <h5 class="p-m-0">Clínicas</h5>
@@ -36,9 +37,10 @@
           <th style="width: 3rem">
             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           </th>
-          <th pSortableColumn="name">Nome <p-sortIcon field="name"></p-sortIcon>
+          <th pSortableColumn="name">Nome<p-sortIcon field="name"></p-sortIcon>
           </th>
-          <th class="no-white-space" pSortableColumn="percentage">Porcentagem <p-sortIcon field="percentage"></p-sortIcon>
+          <th class="no-white-space" pSortableColumn="percentage">Porcentagem<p-sortIcon field="percentage">
+            </p-sortIcon>
           </th>
           <th class="no-white-space">Telefone</th>
           <th class="no-white-space">Endereço</th>
@@ -94,11 +96,13 @@
       </div>
       <div class="p-field">
         <label for="address">Endereço</label>
-        <textarea id="address" pInputTextarea [(ngModel)]="clinic.address" required rows="2" cols="20"></textarea>
+        <textarea autoResize="false" id="address" pInputTextarea [(ngModel)]="clinic.address" required rows="2"
+          cols="20"></textarea>
       </div>
       <div class="p-field">
         <label for="comments">Observação</label>
-        <textarea id="comments" pInputTextarea [(ngModel)]="clinic.comments" required rows="3" cols="20"></textarea>
+        <textarea autoResize="false" maxlength="148" id="comments" pInputTextarea [(ngModel)]="clinic.comments" required
+          rows="3" cols="20"></textarea>
       </div>
     </ng-template>
 

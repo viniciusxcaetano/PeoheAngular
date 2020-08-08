@@ -8,6 +8,7 @@
 
 body {
   font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 15px;
 }
 
 .layout-wrapper {
@@ -18,7 +19,7 @@ body {
     left: 0;
     top: 0;
     width: 100%;
-    z-index: 9999;
+    z-index: 1;
     @include shadow(0 0 16px 0 rgba(0, 0, 0, 0.16));
 
     .layout-topbar-content {
@@ -62,10 +63,10 @@ body {
     position: fixed;
     left: 0;
     top: 60px;
-    width: 250px;
+    width: 180px;
     background-color: #2a3238;
     height: 100%;
-    z-index: 9999;
+    z-index: 1;
     @include shadow(0 0 16px 0 rgba(0, 0, 0, 0.16));
 
     .layout-menu {
@@ -80,7 +81,7 @@ body {
           padding: 12px 24px;
           color: #d8d8d8;
           background-color: #2a3238;
-          font-size: 16px;
+          font-size: 12px;
           border-left: 4px solid transparent;
           border-bottom: 1px solid #23292e;
 
@@ -113,6 +114,7 @@ body {
       width: 100%;
       color: #333333;
       font-weight: 700;
+      font-size: 10px;
       transition: background-color .3s;
 
       i {
@@ -127,7 +129,7 @@ body {
   }
 
   .layout-content {
-    margin-left: 250px;
+    margin-left: 180px;
     padding: 84px 24px 24px 24px;
   }
 

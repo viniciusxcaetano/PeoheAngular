@@ -1,10 +1,18 @@
 <div class="layout-topbar">
-    <div class="layout-topbar-content">
-        <a href="#" id="menu-btn" class="menu-btn" (click)="app.onMobileMenuButton($event)">
-            <i class="fa fa-bars"></i>
-        </a>
-        <img src="assets/layout/images/logo.png" class="topbar-logo">
+  <div class="layout-topbar-content">
+    <a href="#" id="menu-btn" class="menu-btn" (click)="app.onMobileMenuButton($event)">
+      <i class="fa fa-bars"></i>
+    </a>
+    <img src="assets/layout/images/logo.png" class="topbar-logo">
 
-        <a [routerLink]="['/documentation']" class="topbar-link" (click)="app.hideMobileMenu($event)">Entrar</a>
-    </div>
+    <span style="float:right; transform: scale(0.65); vertical-align: middle;" class="p-overlay-badge p-mr-5"
+      (click)="menu.toggle($event)">
+      <button pButton pRipple type="button" icon="pi pi-bell"
+        class="p-button-rounded p-button-info p-button-sm"></button>
+      <span class="p-badge p-badge-danger" style="font-size: 11px;">2</span>
+    </span>
+    <p-menu #menu [model]="items" [popup]="true"></p-menu>
+
+    <!-- (click)="menu.toggle($event)" -->
+  </div>
 </div>
