@@ -1,6 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Clinic } from 'src/app/model/Clinic';
 import { ClinicService } from '../clinic.service';
 

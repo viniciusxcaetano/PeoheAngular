@@ -19,4 +19,5 @@ export class AppTopBarComponent {
       { label: 'Theming', icon: 'pi pi-fw pi-cog' }
     ];
   }
+
 }

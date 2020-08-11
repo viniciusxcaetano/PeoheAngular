@@ -1,9 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
-import { catchError, map, tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Clinic } from '../model/clinic';
-import { RepositoryService } from 'src/app/shared/repository.service';
+import { RepositoryService } from '../shared/repository.service';
 
 @Injectable()
 export class ClinicService {

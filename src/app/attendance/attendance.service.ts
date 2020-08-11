@@ -1,36 +1,38 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
-import { catchError, map, tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Attendance } from '../model/attendance';
-
-const apiAddress = 'https://localhost:44348/api';
+import { RepositoryService } from '../shared/repository.service';
 
 @Injectable()
-export class AttendanceService implements OnInit {
-    constructor(private http: HttpClient) { }
+export class AttendanceService {
 
-    public attendance: Attendance;
+    attedanceList: Attendance[] = [];
 
-    ngOnInit() {
-        let attendance = new Attendance();
-        attendance.amount = 34300;
-        attendance.typeOfPayment = 1;
-        attendance.installmentsAmount = 6;
+    constructor(private webService: RepositoryService, private http: HttpClient) { }
 
-        this.http.post<Attendance>(`${apiAddress}/Attendance/CreateAttendance`, attendance);
-
-    }
-    getAttendances() {
-        return this.http
-            .get<Array<Attendance>>(`${apiAddress}/attendances`)
-            .pipe(
-                map(attendances => attendances)
-            );
+    getAttendances(): Observable<Attendance[]> {
+        const route = 'Attendance/GetAttendances';
+        return this.webService.getData(route);
     }
 
-    private handleError(res: HttpErrorResponse) {
-        console.error(res.error);
-        return Observable.throw(res.error || 'Server error');
+    createAttendance(entity: Attendance): Observable<Attendance> {
+        const route = 'Attendance/CreateAttendance';
+        return this.webService.create(route, entity);
+    }
+
+    updateAttendance(entity: Attendance): Observable<Attendance> {
+        const route = 'Attendance/UpdateAttendance';
+        return this.webService.update(route, entity);
+    }
+
+    deleteAttendance(id: string): Observable<Attendance> {
+        const route = `Attendance/DeleteAttendance?id=${id}`;
+        return this.webService.getData(route);
+    }
+
+    deleteAttendances(entities: string[]): Observable<Attendance[]> {
+        const route = 'Attendance/DeleteAttendances';
+        return this.webService.update(route, entities);
     }
 }

@@ -11,9 +11,6 @@ import { AppTopBarComponent } from './layout/app.topbar.component';
 import { AppSideBarComponent } from './layout/app.sidebar.component';
 import { RepositoryService } from './shared/repository.service';
 
-import { PanelModule } from 'primeng/panel';
-import { ToastModule } from 'primeng/toast';
-import { SplitButtonModule } from 'primeng/splitbutton';
 import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
 
@@ -33,7 +30,8 @@ import { ButtonModule } from 'primeng/button';
     HttpClientModule,
 
     //AppTopBarComponent
-    MenuModule
+    MenuModule,
+    ButtonModule
 
   ],
   providers: [RepositoryService],

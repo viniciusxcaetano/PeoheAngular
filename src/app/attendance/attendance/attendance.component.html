@@ -1,72 +1,122 @@
-<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<div class="content-section implementation">
+  <p-toast></p-toast>
 
-<form [formGroup]="userform" (ngSubmit)="onSubmit(userform.value)">
-    <p-panel header="Validate">
-        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-2">
-                    First Name *:
-                </div>
-                <div class="ui-grid-col-6">
-                    <input pInputText type="text" formControlName="firstname" placeholder="Obrigatório" />
-                </div>
-                <div class="ui-grid-col-4">
-                    <p-message severity="error" text="Firstname is required" *ngIf="!userform.controls['firstname'].valid&&userform.controls['firstname'].dirty"></p-message>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-2">
-                    Last Name *:
-                </div>
-                <div class="ui-grid-col-6">
-                    <input pInputText type="text" formControlName="lastname" placeholder="Obrigatório" />
-                </div>
-                <div class="ui-grid-col-4">
-                    <p-message severity="error" text="Lastname is required" *ngIf="!userform.controls['lastname'].valid&&userform.controls['lastname'].dirty"></p-message>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-2">
-                    Password *:
-                </div>
-                <div class="ui-grid-col-6">
-                    <input pInputText type="password" formControlName="password" placeholder="Obrigatório - Min(6)" />
-                </div>
-                <div class="ui-grid-col-4">
-                    <p-message severity="error" [text]="userform.controls['password'].errors['required'] ? 'Password is required' : userform.controls['password'].errors['minlength'] ? 'Must be longer than 6 characters' : ''" *ngIf="!userform.controls['password'].valid&&userform.controls['password'].dirty"></p-message>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-2">
-                    Description:
-                </div>
-                <div class="ui-grid-col-6">
-                    <textarea pInputTextarea type="text" formControlName="description"></textarea>
-                </div>
-                <div class="ui-grid-col-4"></div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-2">
-                    Gender *:
-                </div>
-                <div class="ui-grid-col-6">
-                    <p-dropdown [options]="genders" formControlName="gender"></p-dropdown>
-                </div>
-                <div class="ui-grid-col-4">
-                    <p-message severity="error" text="Gender is required" *ngIf="!userform.controls['gender'].valid&&userform.controls['gender'].dirty"></p-message>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-2"></div>
-                <div class="ui-grid-col-6">
-                    <button pButton type="submit" label="Submit" [disabled]="!userform.valid"></button>
-                </div>
-                <div class="ui-grid-col-4"></div>
-            </div>
-            <div style="text-align:center;margin-top:20px" *ngIf="submitted">
-                Form Submitted
-                <br> {{diagnostic}}
-            </div>
+  <div class="card">
+    <!-- style="transform: scale(0.8); -->
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Importar"
+          class="p-mr-2 p-d-inline-block"></p-fileUpload>
+        <button pButton pRipple label="Exportar" icon="pi pi-upload" class="p-button-help"></button>
+      </ng-template>
+
+      <ng-template pTemplate="right">
+        <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-success p-mr-2"
+          (click)="openNew()"></button>
+        <button pButton pRipple icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedAttendances()"
+          [disabled]="!selectedAttendances || !selectedAttendances.length"></button>
+      </ng-template>
+    </p-toolbar>
+    <p-table #dt [value]="attendances" [rows]="10" [paginator]="true"
+      [globalFilterFields]="['name','country.name','representative.name','status']" [(selection)]="selectedAttendances"
+      [rowHover]="true" dataKey="clinicId"
+      currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} clínicas" [showCurrentPageReport]="true"
+      [resizableColumns]="true" [autoLayout]="true" tableStyleClass="prime-table">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <h5 class="p-m-0">Clínicas</h5>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+              placeholder="Procurar..." />
+          </span>
         </div>
-    </p-panel>
-</form>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th pSortableColumn="name">Assunto<p-sortIcon field="name"></p-sortIcon>
+          </th>
+          <th class="no-white-space" pSortableColumn="status">Status<p-sortIcon field="status">
+            </p-sortIcon>
+          </th>
+          <th class="no-white-space" pSortableColumn="percentage">Porcentagem<p-sortIcon field="percentage">
+            </p-sortIcon>
+          </th>
+          <th class="no-white-space">Tipo de Pagamento</th>
+          <th class="no-white-space">Valor</th>
+          <th class="no-white-space">Valor Pago</th>
+          <th class="no-white-space"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-clinic>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="clinic"></p-tableCheckbox>
+          </td>
+          <td>{{attendance.name}}</td>
+          <td>{{attendance.status}}</td>
+          <td>{{attendance.percentage}}</td>
+          <td>{{attendance.typeOfPayment}}</td>
+          <td>{{attendance.amount}}</td>
+          <td>{{attendance.amountPaid}}</td>
+          <td>
+            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+              (click)="editAttendance(attendance)"></button>
+            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+              (click)="deleteAttendance(attendance)"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          Existem {{attendances ? attendances.length : 0 }} clínicas cadastradas.
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <!-- Novo ou editar -->
+  <p-dialog [(visible)]="attendanceDialog" [style]="{width: '450px'}" header="Detalhes da Clínica" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+      <div class="p-field">
+        <label for="name">Assunto</label>
+        <input type="text" pInputText id="name" [(ngModel)]="attendance.name" required autofocus />
+        <small class="p-invalid" *ngIf="submitted && !attendance.name">Assunto é obrigatório.</small>
+      </div>
+      <div class="p-formgrid p-grid">
+        <div class="p-field p-col">
+          <label for="status">Status</label>
+          <p-dropdown [options]="status" [(ngModel)]="selectedStatus" placeholder="Selecione o status"
+            optionLabel="value" [showClear]="false"></p-dropdown>
+          <p>Selected Status: {{selectedStatus ? selectedStatus.name : 'none'}}</p>
+        </div>
+        <div class="p-field p-col">
+          <label for="phone">Telefone</label>
+          <!-- <input type="text" pInputText id="phone" [(ngModel)]="attendance.phone" /> -->
+        </div>
+      </div>
+      <div class="p-field">
+        <label for="address">Endereço</label>
+        <!-- <textarea autoResize="false" id="address" pInputTextarea [(ngModel)]="attendance.address" required rows="2"
+          cols="20"></textarea> -->
+      </div>
+      <div class="p-field">
+        <label for="comments">Observação</label>
+        <!-- <textarea autoResize="false" maxlength="148" id="comments" pInputTextarea [(ngModel)]="attendance.comments"
+          required rows="3" cols="20"></textarea> -->
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+      <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text"
+        (click)="saveAttendance()"></button>
+    </ng-template>
+  </p-dialog>
+
+  <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+</div>

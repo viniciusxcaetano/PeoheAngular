@@ -1,3 +1,11 @@
+export enum Status {
+    Aberto = 'Aberto',
+    Pago = 'Pago',
+    Vencido = 'Vencidoo'
+}
+
 export enum TypeOfPayment {
-    Debit, CreditCard, Agreement
+    Debito = 'Débito',
+    Credito = 'Crédito',
+    Convenio = 'Convênio'
 }
