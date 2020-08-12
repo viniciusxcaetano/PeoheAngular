@@ -19,9 +19,9 @@
     </p-toolbar>
     <p-table #dt [value]="attendances" [rows]="10" [paginator]="true"
       [globalFilterFields]="['name','country.name','representative.name','status']" [(selection)]="selectedAttendances"
-      [rowHover]="true" dataKey="clinicId"
-      currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} clínicas" [showCurrentPageReport]="true"
-      [resizableColumns]="true" [autoLayout]="true" tableStyleClass="prime-table">
+      [rowHover]="true" dataKey="attendanceId"
+      currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} atendimentos"
+      [showCurrentPageReport]="true" [resizableColumns]="true" [autoLayout]="true" tableStyleClass="prime-table">
       <ng-template pTemplate="caption">
         <div class="p-d-flex p-ai-center p-jc-between">
           <h5 class="p-m-0">Clínicas</h5>
@@ -51,13 +51,13 @@
           <th class="no-white-space"></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-clinic>
+      <ng-template pTemplate="body" let-attendance>
         <tr>
           <td>
-            <p-tableCheckbox [value]="clinic"></p-tableCheckbox>
+            <p-tableCheckbox [value]="attendance"></p-tableCheckbox>
           </td>
           <td>{{attendance.name}}</td>
-          <td>{{attendance.status}}</td>
+          <td>{{getStatus(attendance.status)}}</td>
           <td>{{attendance.percentage}}</td>
           <td>{{attendance.typeOfPayment}}</td>
           <td>{{attendance.amount}}</td>
@@ -72,14 +72,14 @@
       </ng-template>
       <ng-template pTemplate="summary">
         <div class="p-d-flex p-ai-center p-jc-between">
-          Existem {{attendances ? attendances.length : 0 }} clínicas cadastradas.
+          Existem {{attendances ? attendances.length : 0 }} atendimentos cadastrados.
         </div>
       </ng-template>
     </p-table>
   </div>
 
   <!-- Novo ou editar -->
-  <p-dialog [(visible)]="attendanceDialog" [style]="{width: '450px'}" header="Detalhes da Clínica" [modal]="true"
+  <p-dialog [(visible)]="attendanceDialog" [style]="{width: '450px'}" header="Detalhes do atendimento" [modal]="true"
     styleClass="p-fluid">
     <ng-template pTemplate="content">
       <div class="p-field">
@@ -90,24 +90,27 @@
       <div class="p-formgrid p-grid">
         <div class="p-field p-col">
           <label for="status">Status</label>
-          <p-dropdown [options]="status" [(ngModel)]="selectedStatus" placeholder="Selecione o status"
-            optionLabel="value" [showClear]="false"></p-dropdown>
+          <p-dropdown [options]="status" optionLabel="value" [(ngModel)]="selectedStatus"
+            placeholder="Selecione o status" [showClear]="false"></p-dropdown>
           <p>Selected Status: {{selectedStatus ? selectedStatus.name : 'none'}}</p>
         </div>
         <div class="p-field p-col">
-          <label for="phone">Telefone</label>
-          <!-- <input type="text" pInputText id="phone" [(ngModel)]="attendance.phone" /> -->
+          <label for="amount">Valor</label>
+          <p-inputNumber id="amount" placeholder="R$" [(ngModel)]="attendance.amount" mode="currency" currency="BRL"
+            locale="pt-BR"></p-inputNumber>
         </div>
       </div>
-      <div class="p-field">
-        <label for="address">Endereço</label>
-        <!-- <textarea autoResize="false" id="address" pInputTextarea [(ngModel)]="attendance.address" required rows="2"
-          cols="20"></textarea> -->
-      </div>
-      <div class="p-field">
-        <label for="comments">Observação</label>
-        <!-- <textarea autoResize="false" maxlength="148" id="comments" pInputTextarea [(ngModel)]="attendance.comments"
-          required rows="3" cols="20"></textarea> -->
+      <div class="p-formgrid p-grid">
+        <div class="p-field p-col">
+          <label for="percentage">Porcentagem</label>
+          <p-inputNumber placeholder="%" id="percentage" [(ngModel)]="attendance.percentage" suffix="%"></p-inputNumber>
+        </div>
+
+        <div class="p-field p-col">
+          <label for="amount">Valor Pago</label>
+          <p-inputNumber id="amountPaid" placeholder="R$" [(ngModel)]="attendance.amountPaid" mode="currency"
+            currency="BRL" locale="pt-BR"></p-inputNumber>
+        </div>
       </div>
     </ng-template>
 

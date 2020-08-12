@@ -3,7 +3,6 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { Attendance } from 'src/app/model/attendance';
 import { AttendanceService } from '../attendance.service';
 import { Status } from 'src/app/model/enum/Attendance';
-import { selectedItem } from 'src/app/shared/selectedItem';
 
 @Component({
   selector: 'app-attendance',
@@ -22,21 +21,24 @@ export class AttendanceComponent implements OnInit {
 
   attendanceDialog: boolean;
   attendances: Attendance[];
-  attendance: Attendance;
   selectedAttendances: Attendance[];
+  attendance: Attendance;
   submitted: boolean;
-
-  status = Object.keys(Status).filter(a => a.match(/^\D/)).map(name => (new selectedItem(name, Status[name])));
-  selectedStatus: selectedItem;
+  selectedStatus: any;
+  status: any;
+  test: Status;
 
   constructor(private attendanceService: AttendanceService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.getAttendances();
+    this.status = Object.keys(Status).filter(a => a.match(/^\D/)).map(name => ({ name, value: Status[name] as number }));
     this.selectedStatus = this.status[0];
+
   }
 
   openNew() {
+
     this.attendance = {};
     this.submitted = false;
     this.attendanceDialog = true;
@@ -78,10 +80,24 @@ export class AttendanceComponent implements OnInit {
   hideDialog() {
     this.attendanceDialog = false;
     this.submitted = false;
-    this.selectedStatus = this.status[0];
   }
+
+  getStatus(number: any) {
+    if (typeof number === "string") {
+      Status[number];
+      return Status[number];
+    }
+    else {
+      console.log(number);
+      let result = Object.values(Status)[number];
+      return result.valueOf();
+    }
+  }
+
   saveAttendance() {
+
     this.submitted = true;
+    this.attendance.status = this.selectedStatus.name;
 
     if (this.attendance.attendanceId) {
       this.attendanceService.updateAttendance(this.attendance).subscribe(attendance => (this.attendance = attendance));
@@ -94,6 +110,8 @@ export class AttendanceComponent implements OnInit {
     }
     else {
       this.attendanceService.createAttendance(this.attendance).subscribe(attendance => (this.attendance = attendance));
+
+      //console.log(this.attendance);
       this.attendances.push(this.attendance);
       this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Atendimento Criado', life: 3000 });
     }
