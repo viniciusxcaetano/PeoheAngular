@@ -89,7 +89,6 @@ export class AttendanceComponent implements OnInit {
       return Status[number];
     }
     else {
-      console.log(number);
       let result = Object.values(Status)[number];
       return result.valueOf();
     }

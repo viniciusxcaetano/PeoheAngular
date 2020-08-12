@@ -24,7 +24,7 @@
       [showCurrentPageReport]="true" [resizableColumns]="true" [autoLayout]="true" tableStyleClass="prime-table">
       <ng-template pTemplate="caption">
         <div class="p-d-flex p-ai-center p-jc-between">
-          <h5 class="p-m-0">Clínicas</h5>
+          <h5 class="p-m-0">Atendimentos</h5>
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
@@ -86,6 +86,12 @@
         <label for="name">Assunto</label>
         <input type="text" pInputText id="name" [(ngModel)]="attendance.name" required autofocus />
         <small class="p-invalid" *ngIf="submitted && !attendance.name">Assunto é obrigatório.</small>
+      </div>
+      <div class="p-fluid">
+          <div class="p-field">
+              <label for="clinics">Clínica</label>
+              <p-dropdown [options]="cities" [(ngModel)]="selectedCity" [filter]="true" filterBy="label,value.name"></p-dropdown>
+          </div>
       </div>
       <div class="p-formgrid p-grid">
         <div class="p-field p-col">
