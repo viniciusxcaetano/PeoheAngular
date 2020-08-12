@@ -59,6 +59,7 @@ export class AttendanceComponent implements OnInit {
   }
 
   editAttendance(attendance: Attendance) {
+    this.selectedStatus = this.status[attendance.status];
     this.attendance = { ...attendance };
     this.attendanceDialog = true;
   }
@@ -98,7 +99,6 @@ export class AttendanceComponent implements OnInit {
 
     this.submitted = true;
     this.attendance.status = this.selectedStatus.name;
-
     if (this.attendance.attendanceId) {
       this.attendanceService.updateAttendance(this.attendance).subscribe(attendance => (this.attendance = attendance));
       const index = this.attendance ? this.attendances.findIndex(h => h.attendanceId === this.attendance.attendanceId) : -1;
@@ -110,8 +110,6 @@ export class AttendanceComponent implements OnInit {
     }
     else {
       this.attendanceService.createAttendance(this.attendance).subscribe(attendance => (this.attendance = attendance));
-
-      //console.log(this.attendance);
       this.attendances.push(this.attendance);
       this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Atendimento Criado', life: 3000 });
     }
