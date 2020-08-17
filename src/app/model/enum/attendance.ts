@@ -1,7 +1,7 @@
 export enum Status {
     Aberto = "Aberto",
     Pago = "Pago",
-    Vencido = "Vencidoo"
+    Vencido = "Vencido"
 }
 
 export enum TypeOfPayment {

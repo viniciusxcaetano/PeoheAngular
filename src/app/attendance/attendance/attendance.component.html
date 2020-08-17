@@ -59,7 +59,7 @@
           <td>{{attendance.name}}</td>
           <td>{{getStatus(attendance.status)}}</td>
           <td>{{attendance.percentage}}</td>
-          <td>{{attendance.typeOfPayment}}</td>
+          <td>{{getTypeOfPayment(attendance.typeOfPayment)}}</td>
           <td>{{attendance.amount}}</td>
           <td>{{attendance.amountPaid}}</td>
           <td>
@@ -79,7 +79,7 @@
   </div>
 
   <!-- Novo ou editar -->
-  <p-dialog [(visible)]="attendanceDialog" [style]="{width: '450px'}" header="Detalhes do atendimento" [modal]="true"
+  <p-dialog [(visible)]="attendanceDialog" [style]="{width: '650px'}" header="Detalhes do atendimento" [modal]="true"
     styleClass="p-fluid">
     <ng-template pTemplate="content">
       <div class="p-field">
@@ -87,18 +87,23 @@
         <input type="text" pInputText id="name" [(ngModel)]="attendance.name" required autofocus />
         <small class="p-invalid" *ngIf="submitted && !attendance.name">Assunto é obrigatório.</small>
       </div>
-      <div class="p-fluid">
-          <div class="p-field">
-              <label for="clinics">Clínica</label>
-              <p-dropdown [options]="cities" [(ngModel)]="selectedCity" [filter]="true" filterBy="label,value.name"></p-dropdown>
-          </div>
+      <div class="p-formgrid p-grid">
+        <div class="p-field p-col">
+          <label for="clinic">Clínica</label>
+          <p-dropdown id="clinic" [options]="clinics" optionLabel="name" [(ngModel)]="selectedClinic" [filter]="true"
+            filterBy="label,value.name" placeholder="Selecione a clínica"></p-dropdown>
+        </div>
+        <div class="p-field p-col">
+          <label for="typeOfPayment">Forma de Pagamento</label>
+          <p-dropdown [options]="typeOfPayment" optionLabel="value" [(ngModel)]="selectedTypeOfPayment" 
+            placeholder="Obrigatório" [showClear]="false"></p-dropdown>
+        </div>
       </div>
       <div class="p-formgrid p-grid">
         <div class="p-field p-col">
           <label for="status">Status</label>
           <p-dropdown [options]="status" optionLabel="value" [(ngModel)]="selectedStatus"
             placeholder="Selecione o status" [showClear]="false"></p-dropdown>
-          <p>Selected Status: {{selectedStatus ? selectedStatus.name : 'none'}}</p>
         </div>
         <div class="p-field p-col">
           <label for="amount">Valor</label>

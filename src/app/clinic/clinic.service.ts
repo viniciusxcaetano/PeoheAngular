@@ -16,6 +16,11 @@ export class ClinicService {
     return this.webService.getData(route);
   }
 
+  getClinicNameList(): Observable<Clinic[]> {
+    const route = 'Clinic/GetClinicNameList';
+    return this.webService.getData(route);
+  }
+
   createClinic(entity: Clinic): Observable<Clinic> {
     const route = 'Clinic/CreateClinic';
     return this.webService.create(route, entity);

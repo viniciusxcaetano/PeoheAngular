@@ -5,8 +5,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AttendanceListComponent } from './attendance-list/attendance-list.component';
 import { AttendanceDetailComponent } from './attendance-detail/attendance-detail.component';
-import { AttendanceService } from './attendance.service';
 import { AttendanceComponent } from './attendance/attendance.component';
+import { AttendanceService } from './attendance.service';
+import { ClinicService } from '../clinic/clinic.service';
 
 import { TableModule } from 'primeng/table';
 import { SliderModule } from 'primeng/slider';
@@ -35,7 +36,7 @@ const routes: Routes = [{ path: '', component: AttendanceComponent }];
 
   declarations: [AttendanceComponent, AttendanceDetailComponent, AttendanceListComponent, AttendanceDetailComponent],
   exports: [RouterModule, AttendanceComponent],
-  providers: [AttendanceService],
+  providers: [AttendanceService, ClinicService],
   bootstrap: [AttendanceComponent, AttendanceDetailComponent, AttendanceListComponent, AttendanceDetailComponent],
 
   imports: [

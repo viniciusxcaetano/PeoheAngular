@@ -3,19 +3,12 @@ export class Enum {
     key: string;
     value: number;
 
-    static items: Enum[];
-    static Items: Enum;
-
-    constructor(key: string, value: any) {
+    constructor(key: string, value: number) {
         this.key = key;
-        this.value = value as number;
+        this.value = value;
     }
 
     static get(enumerable: any) {
-        return this.items = Object.keys(enumerable).filter(a => a.match(/^\D/)).map(name => (new Enum(name, enumerable[name])));
-    }
-
-    static default() {
-        return this.items[0];
+        return Object.keys(enumerable).filter(a => a.match(/^\D/)).map(name => (new Enum(name, enumerable[name])));
     }
 }

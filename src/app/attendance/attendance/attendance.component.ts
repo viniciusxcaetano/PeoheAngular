@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { Attendance } from 'src/app/model/attendance';
 import { AttendanceService } from '../attendance.service';
-import { Status } from 'src/app/model/enum/Attendance';
+import { Status, TypeOfPayment } from 'src/app/model/enum/Attendance';
+import { Enum } from 'src/app/shared/enum';
+import { ClinicService } from 'src/app/clinic/clinic.service';
+import { Clinic } from 'src/app/model/Clinic';
 
 @Component({
   selector: 'app-attendance',
@@ -22,23 +25,31 @@ export class AttendanceComponent implements OnInit {
   attendanceDialog: boolean;
   attendances: Attendance[];
   selectedAttendances: Attendance[];
+  clinics: Clinic[];
+  selectedClinic: Clinic;
   attendance: Attendance;
   submitted: boolean;
-  selectedStatus: any;
-  status: any;
-  test: Status;
+  status = Enum.get(Status);
+  typeOfPayment = Enum.get(TypeOfPayment);
+  selectedStatus: Enum;
+  selectedTypeOfPayment: Enum;
 
-  constructor(private attendanceService: AttendanceService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(
+    private attendanceService: AttendanceService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private clinicService: ClinicService
+  ) { }
 
   ngOnInit() {
     this.getAttendances();
-    this.status = Object.keys(Status).filter(a => a.match(/^\D/)).map(name => ({ name, value: Status[name] as number }));
-    this.selectedStatus = this.status[0];
-
+    this.getClinicNameList();
   }
 
   openNew() {
 
+    this.selectedStatus = this.status[0]; //Default Status
+    this.selectedTypeOfPayment = null;
     this.attendance = {};
     this.submitted = false;
     this.attendanceDialog = true;
@@ -60,6 +71,7 @@ export class AttendanceComponent implements OnInit {
 
   editAttendance(attendance: Attendance) {
     this.selectedStatus = this.status[attendance.status];
+    this.selectedTypeOfPayment = this.typeOfPayment[attendance.typeOfPayment];
     this.attendance = { ...attendance };
     this.attendanceDialog = true;
   }
@@ -84,20 +96,19 @@ export class AttendanceComponent implements OnInit {
   }
 
   getStatus(number: any) {
-    if (typeof number === "string") {
-      Status[number];
-      return Status[number];
-    }
-    else {
-      let result = Object.values(Status)[number];
-      return result.valueOf();
-    }
+    return typeof number === "string" ? Status[number] : Object.values(Status)[number];
+  }
+  getTypeOfPayment(number: any) {
+    return typeof number === "string" ? TypeOfPayment[number] : Object.values(TypeOfPayment)[number];
   }
 
   saveAttendance() {
 
     this.submitted = true;
-    this.attendance.status = this.selectedStatus.name;
+    this.attendance.status = this.selectedStatus.key as Status;
+    this.attendance.typeOfPayment = this.selectedTypeOfPayment.key as TypeOfPayment;
+    this.attendance.clinic = this.selectedClinic;
+
     if (this.attendance.attendanceId) {
       this.attendanceService.updateAttendance(this.attendance).subscribe(attendance => (this.attendance = attendance));
       const index = this.attendance ? this.attendances.findIndex(h => h.attendanceId === this.attendance.attendanceId) : -1;
@@ -110,14 +121,19 @@ export class AttendanceComponent implements OnInit {
     else {
       this.attendanceService.createAttendance(this.attendance).subscribe(attendance => (this.attendance = attendance));
       this.attendances.push(this.attendance);
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Atendimento Criado', life: 3000 });
+      this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Atendimento Criado', life: 3000 });
     }
     this.attendances = [...this.attendances];
     this.attendanceDialog = false;
+    this.selectedClinic = {};
     this.attendance = {};
   }
 
   getAttendances(): void {
     this.attendanceService.getAttendances().subscribe(attendances => (this.attendances = attendances));
+  }
+
+  getClinicNameList(): void {
+    this.clinicService.getClinicNameList().subscribe(clinics => (this.clinics = clinics));
   }
 }
