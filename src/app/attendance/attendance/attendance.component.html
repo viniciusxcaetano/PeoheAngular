@@ -95,8 +95,12 @@
         </div>
         <div class="p-field p-col">
           <label for="typeOfPayment">Forma de Pagamento</label>
-          <p-dropdown [options]="typeOfPayment" optionLabel="value" [(ngModel)]="selectedTypeOfPayment" 
-            placeholder="Obrigatório" [showClear]="false"></p-dropdown>
+          <p-dropdown [options]="typeOfPayment" optionLabel="value" [(ngModel)]="selectedTypeOfPayment"
+            placeholder="Obrigatório" [showClear]="false" (onChange)="onChangeTypeOfPayment()"></p-dropdown>
+        </div>
+        <div class="p-field p-col">
+          <label style="color:white">Ver Parcelas</label>
+          <button [disabled]="!seeInstallment" type="button" (click)="show()" pButton icon="pi pi-bars" label="Ver Parcelas"></button>
         </div>
       </div>
       <div class="p-formgrid p-grid">

@@ -23,6 +23,7 @@ import { Clinic } from 'src/app/model/Clinic';
 export class AttendanceComponent implements OnInit {
 
   attendanceDialog: boolean;
+  seeInstallment = false;
   attendances: Attendance[];
   selectedAttendances: Attendance[];
   clinics: Clinic[];
@@ -38,8 +39,7 @@ export class AttendanceComponent implements OnInit {
     private attendanceService: AttendanceService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private clinicService: ClinicService
-  ) { }
+    private clinicService: ClinicService) { }
 
   ngOnInit() {
     this.getAttendances();
@@ -48,7 +48,7 @@ export class AttendanceComponent implements OnInit {
 
   openNew() {
 
-    this.selectedStatus = this.status[0]; //Default Status
+    this.selectedStatus = this.status[0];
     this.selectedTypeOfPayment = null;
     this.attendance = {};
     this.submitted = false;
@@ -93,6 +93,9 @@ export class AttendanceComponent implements OnInit {
   hideDialog() {
     this.attendanceDialog = false;
     this.submitted = false;
+  }
+  onChangeTypeOfPayment() {
+    this.seeInstallment = TypeOfPayment[this.selectedTypeOfPayment.key] === TypeOfPayment.Credito ? true : false;
   }
 
   getStatus(number: any) {
