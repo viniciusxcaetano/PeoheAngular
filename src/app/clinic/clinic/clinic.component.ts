@@ -46,7 +46,7 @@ export class ClinicComponent implements OnInit {
         this.clinicService.deleteClinics(this.selectedClinics.map(c => c.clinicId)).subscribe();
         this.clinics = this.clinics.filter(val => !this.selectedClinics.includes(val));
         this.selectedClinics = null;
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Clínicas excluídas', life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Clínicas excluídas', life: 3000 });
       }
     });
   }
@@ -65,7 +65,7 @@ export class ClinicComponent implements OnInit {
         this.clinicService.deleteClinic(clinic.clinicId).subscribe();
         this.clinics = this.clinics.filter(val => val.clinicId !== clinic.clinicId);
         this.clinic = {};
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Clínica excluída', life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Clínica excluída', life: 3000 });
       }
     });
   }
@@ -86,12 +86,12 @@ export class ClinicComponent implements OnInit {
         if (index > -1) {
           this.clinics[index] = this.clinic;
         }
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Clínica Atualizada', life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Clínica Atualizada', life: 3000 });
       }
       else {
         this.clinicService.createClinic(this.clinic).subscribe(clinic => (this.clinic = clinic));
         this.clinics.push(this.clinic);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Clínica Criada', life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Clínica Criada', life: 3000 });
       }
       this.clinics = [...this.clinics];
       this.clinicDialog = false;

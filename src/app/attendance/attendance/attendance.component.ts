@@ -64,7 +64,7 @@ export class AttendanceComponent implements OnInit {
         this.attendanceService.deleteAttendances(this.selectedAttendances.map(c => c.attendanceId)).subscribe();
         this.attendances = this.attendances.filter(val => !this.selectedAttendances.includes(val));
         this.selectedAttendances = null;
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Atendimentos excluídos', life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Atendimentos excluídos', life: 3000 });
       }
     });
   }
@@ -85,7 +85,7 @@ export class AttendanceComponent implements OnInit {
         this.attendanceService.deleteAttendance(attendance.attendanceId).subscribe();
         this.attendances = this.attendances.filter(val => val.attendanceId !== attendance.attendanceId);
         this.attendance = {};
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Atendimento excluído', life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Atendimento excluído', life: 3000 });
       }
     });
   }
@@ -119,7 +119,7 @@ export class AttendanceComponent implements OnInit {
       if (index > -1) {
         this.attendances[index] = this.attendance;
       }
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Atendimento Atualizado', life: 3000 });
+      this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Atendimento Atualizado', life: 3000 });
     }
     else {
       this.attendanceService.createAttendance(this.attendance).subscribe(attendance => (this.attendance = attendance));
