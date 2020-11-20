@@ -72,6 +72,7 @@ export class AttendanceComponent implements OnInit {
   editAttendance(attendance: Attendance) {
     this.selectedStatus = this.status[attendance.status];
     this.selectedTypeOfPayment = this.typeOfPayment[attendance.typeOfPayment];
+    this.seeInstallment = TypeOfPayment[this.selectedTypeOfPayment.key] === TypeOfPayment.Credito ? true : false;
     this.attendance = { ...attendance };
     this.attendanceDialog = true;
   }
@@ -138,5 +139,9 @@ export class AttendanceComponent implements OnInit {
 
   getClinicNameList(): void {
     this.clinicService.getClinicNameList().subscribe(clinics => (this.clinics = clinics));
+  }
+
+  show(): void{
+    
   }
 }
