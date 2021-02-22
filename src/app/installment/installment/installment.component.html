@@ -1,0 +1,25 @@
+<p-dialog [(visible)]="visible" [style]="{width: '350px'}" header="Ajuste das parcelas" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-formgrid p-grid">
+            <div class="p-field p-col">
+                <label for="installment">Quantidades de parcelas</label>
+                <p-dropdown appendTo="body" id="installment" optionLabel="formattedInstallment"
+                    [options]="installments" [(ngModel)]="selectedInstallmentNumber" placeholder="Selecione as parcelas"
+                    (onChange)="onChangeInstallment()"></p-dropdown>
+            </div>
+        </div>
+        <div class="p-formgrid p-grid">
+            <div class="p-field p-col">
+
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+                (click)="close()"></button>
+            <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text"
+                (click)="saveInstallments()"></button>
+    </ng-template>
+</p-dialog>

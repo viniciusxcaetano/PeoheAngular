@@ -6,6 +6,7 @@ import { Status, TypeOfPayment } from 'src/app/model/enum/Attendance';
 import { Enum } from 'src/app/shared/enum';
 import { ClinicService } from 'src/app/clinic/clinic.service';
 import { Clinic } from 'src/app/model/Clinic';
+// import { Installment } from 'src/app/model/Installment';
 
 @Component({
   selector: 'app-attendance',
@@ -23,7 +24,8 @@ import { Clinic } from 'src/app/model/Clinic';
 export class AttendanceComponent implements OnInit {
 
   attendanceDialog: boolean;
-  seeInstallment = false;
+  installmentDialog: boolean;
+  showInstallmentBtn = false;
   attendances: Attendance[];
   selectedAttendances: Attendance[];
   clinics: Clinic[];
@@ -33,7 +35,9 @@ export class AttendanceComponent implements OnInit {
   status = Enum.get(Status);
   typeOfPayment = Enum.get(TypeOfPayment);
   selectedStatus: Enum;
-  selectedTypeOfPayment: Enum;
+  selectedTypePayment: Enum;
+  // Installments: Installment[];
+  // selectedInstallmentNumber: Installment;
 
   constructor(
     private attendanceService: AttendanceService,
@@ -49,10 +53,11 @@ export class AttendanceComponent implements OnInit {
   openNew() {
 
     this.selectedStatus = this.status[0];
-    this.selectedTypeOfPayment = null;
+    this.selectedTypePayment = null;
     this.attendance = {};
     this.submitted = false;
     this.attendanceDialog = true;
+    this.showInstallmentBtn = false;
   }
 
   deleteSelectedAttendances() {
@@ -71,8 +76,8 @@ export class AttendanceComponent implements OnInit {
 
   editAttendance(attendance: Attendance) {
     this.selectedStatus = this.status[attendance.status];
-    this.selectedTypeOfPayment = this.typeOfPayment[attendance.typeOfPayment];
-    this.seeInstallment = TypeOfPayment[this.selectedTypeOfPayment.key] === TypeOfPayment.Credito ? true : false;
+    this.selectedTypePayment = this.typeOfPayment[attendance.typeOfPayment];
+    this.showInstallmentBtn = TypeOfPayment[this.selectedTypePayment.key] === TypeOfPayment.Credito ? true : false;
     this.attendance = { ...attendance };
     this.attendanceDialog = true;
   }
@@ -96,7 +101,7 @@ export class AttendanceComponent implements OnInit {
     this.submitted = false;
   }
   onChangeTypeOfPayment() {
-    this.seeInstallment = TypeOfPayment[this.selectedTypeOfPayment.key] === TypeOfPayment.Credito ? true : false;
+    this.showInstallmentBtn = TypeOfPayment[this.selectedTypePayment.key] === TypeOfPayment.Credito ? true : false;
   }
 
   getStatus(number: any) {
@@ -110,7 +115,7 @@ export class AttendanceComponent implements OnInit {
 
     this.submitted = true;
     this.attendance.status = this.selectedStatus.key as Status;
-    this.attendance.typeOfPayment = this.selectedTypeOfPayment.key as TypeOfPayment;
+    this.attendance.typeOfPayment = this.selectedTypePayment.key as TypeOfPayment;
     this.attendance.clinic = this.selectedClinic;
 
     if (this.attendance.attendanceId) {
@@ -141,7 +146,11 @@ export class AttendanceComponent implements OnInit {
     this.clinicService.getClinicNameList().subscribe(clinics => (this.clinics = clinics));
   }
 
-  show(): void{
-    
+  showInstallmentDialog() {
+    this.installmentDialog = true;
+  }
+
+  closeInstallmentDialog() {
+    this.installmentDialog = false;
   }
 }

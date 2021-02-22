@@ -7,7 +7,12 @@ import { AttendanceListComponent } from './attendance-list/attendance-list.compo
 import { AttendanceDetailComponent } from './attendance-detail/attendance-detail.component';
 import { AttendanceComponent } from './attendance/attendance.component';
 import { AttendanceService } from './attendance.service';
+
 import { ClinicService } from '../clinic/clinic.service';
+
+import { InstallmentComponent } from "../installment/installment/installment.component";
+import { InstallmentService } from "../installment/installment.service";
+
 
 import { TableModule } from 'primeng/table';
 import { SliderModule } from 'primeng/slider';
@@ -34,9 +39,9 @@ const routes: Routes = [{ path: '', component: AttendanceComponent }];
 
 @NgModule({
 
-  declarations: [AttendanceComponent, AttendanceDetailComponent, AttendanceListComponent, AttendanceDetailComponent],
+  declarations: [AttendanceComponent, AttendanceDetailComponent, AttendanceListComponent, AttendanceDetailComponent, InstallmentComponent],
   exports: [RouterModule, AttendanceComponent],
-  providers: [AttendanceService, ClinicService],
+  providers: [AttendanceService, ClinicService, InstallmentService],
   bootstrap: [AttendanceComponent, AttendanceDetailComponent, AttendanceListComponent, AttendanceDetailComponent],
 
   imports: [
@@ -67,7 +72,6 @@ const routes: Routes = [{ path: '', component: AttendanceComponent }];
     TabViewModule,
     DropdownModule
   ],
-
 })
 
 export class AttendanceModule { }

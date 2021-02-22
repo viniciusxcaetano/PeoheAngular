@@ -90,41 +90,43 @@
       <div class="p-formgrid p-grid">
         <div class="p-field p-col">
           <label for="clinic">Clínica</label>
-          <p-dropdown id="clinic" [options]="clinics" optionLabel="name" [(ngModel)]="selectedClinic" [filter]="true"
-            filterBy="label,value.name" placeholder="Selecione a clínica"></p-dropdown>
+          <p-dropdown appendTo="body" id="clinic" [options]="clinics" optionLabel="name" [(ngModel)]="selectedClinic"
+            [filter]="true" filterBy="label,value.name" placeholder="Selecione a clínica"></p-dropdown>
         </div>
         <div class="p-field p-col">
           <label for="typeOfPayment">Forma de Pagamento</label>
-          <p-dropdown [options]="typeOfPayment" optionLabel="value" [(ngModel)]="selectedTypeOfPayment"
+          <p-dropdown appendTo="body" [options]="typeOfPayment" optionLabel="value" [(ngModel)]="selectedTypePayment"
             placeholder="Obrigatório" [showClear]="false" (onChange)="onChangeTypeOfPayment()"></p-dropdown>
-        </div>
-        <div class="p-field p-col">
-          <label style="color:white">Ver Parcelas</label>
-          <button [disabled]="!seeInstallment" type="button" (click)="show()" pButton icon="pi pi-bars" label="Ver Parcelas"></button>
         </div>
       </div>
       <div class="p-formgrid p-grid">
-        <div class="p-field p-col">
-          <label for="status">Status</label>
-          <p-dropdown [options]="status" optionLabel="value" [(ngModel)]="selectedStatus"
-            placeholder="Selecione o status" [showClear]="false"></p-dropdown>
-        </div>
         <div class="p-field p-col">
           <label for="amount">Valor</label>
           <p-inputNumber id="amount" placeholder="R$" [(ngModel)]="attendance.amount" mode="currency" currency="BRL"
             locale="pt-BR"></p-inputNumber>
         </div>
-      </div>
-      <div class="p-formgrid p-grid">
-        <div class="p-field p-col">
-          <label for="percentage">Porcentagem</label>
-          <p-inputNumber placeholder="%" id="percentage" [(ngModel)]="attendance.percentage" suffix="%"></p-inputNumber>
-        </div>
-
         <div class="p-field p-col">
           <label for="amount">Valor Pago</label>
           <p-inputNumber id="amountPaid" placeholder="R$" [(ngModel)]="attendance.amountPaid" mode="currency"
             currency="BRL" locale="pt-BR"></p-inputNumber>
+        </div>
+      </div>
+      <div class="p-formgrid p-grid">
+        <div class="p-field p-col">
+          <label for="status">Status</label>
+          <p-dropdown appendTo="body" [options]="status" optionLabel="value" [(ngModel)]="selectedStatus"
+            placeholder="Selecione o status" [showClear]="false"></p-dropdown>
+        </div>
+        <div class="p-field p-col">
+          <label for="percentage">Porcentagem</label>
+          <p-inputNumber placeholder="%" id="percentage" [(ngModel)]="attendance.percentage" suffix="%"></p-inputNumber>
+        </div>
+      </div>
+      <div class="p-formgrid p-grid">
+        <div class="p-field p-col">
+          <label style="color:white">Ajustar Parcelas</label>
+          <button [disabled]="!showInstallmentBtn" type="button" (click)="showInstallmentDialog()" pButton
+            icon="pi pi-bars" label="Ajustar Parcelas"></button>
         </div>
       </div>
     </ng-template>
@@ -135,6 +137,12 @@
         (click)="saveAttendance()"></button>
     </ng-template>
   </p-dialog>
+
+    <app-installment 
+    *ngIf="installmentDialog"
+    [attendance]="attendance"
+    (unselect)="closeInstallmentDialog()">
+    </app-installment>
 
   <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
 </div>
