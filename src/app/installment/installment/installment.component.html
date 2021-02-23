@@ -1,11 +1,11 @@
 <p-dialog [(visible)]="visible" [style]="{width: '350px'}" header="Ajuste das parcelas" [modal]="true"
-    styleClass="p-fluid">
+    styleClass="p-fluid" [closable]="false">
     <ng-template pTemplate="content">
         <div class="p-formgrid p-grid">
             <div class="p-field p-col">
                 <label for="installment">Quantidades de parcelas</label>
-                <p-dropdown appendTo="body" id="installment" optionLabel="formattedInstallment"
-                    [options]="installments" [(ngModel)]="selectedInstallmentNumber" placeholder="Selecione as parcelas"
+                <p-dropdown appendTo="body" id="installment" optionLabel="formattedInstallment" [options]="installments"
+                    [(ngModel)]="selectedInstallment" placeholder="Selecione as parcelas"
                     (onChange)="onChangeInstallment()"></p-dropdown>
             </div>
         </div>
@@ -14,12 +14,20 @@
 
             </div>
         </div>
+        <ul class="list">
+            <li *ngFor="let installment of selectedInstallments">
+                <div class="card">
+                    <app-installment-list [installmentNumber]="installment.installmentNumber"
+                        [amount]="installment.amount">
+                    </app-installment-list>
+                </div>
+            </li>
+        </ul>
     </ng-template>
 
     <ng-template pTemplate="footer">
-        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
-                (click)="close()"></button>
-            <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text"
-                (click)="saveInstallments()"></button>
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="close()"></button>
+        <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text"
+            (click)="saveInstallments()"></button>
     </ng-template>
 </p-dialog>

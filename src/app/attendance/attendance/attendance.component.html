@@ -125,7 +125,7 @@
       <div class="p-formgrid p-grid">
         <div class="p-field p-col">
           <label style="color:white">Ajustar Parcelas</label>
-          <button [disabled]="!showInstallmentBtn" type="button" (click)="showInstallmentDialog()" pButton
+          <button [disabled]="!showInstallmentBtn" type="button" (click)="handleInstallmentDialog()" pButton
             icon="pi pi-bars" label="Ajustar Parcelas"></button>
         </div>
       </div>
@@ -141,7 +141,7 @@
     <app-installment 
     *ngIf="installmentDialog"
     [attendance]="attendance"
-    (unselect)="closeInstallmentDialog()">
+    (unselect)="handleInstallmentDialog()">
     </app-installment>
 
   <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

@@ -22,18 +22,23 @@ export class InstallmentComponent implements OnInit {
   @Input() attendance: Attendance;
   @Output() unselect = new EventEmitter<string>();
   installments: Installment[];
-  selectedInstallmentNumber: Installment;
+  selectedInstallment: Installment;
+  selectedInstallments: Installment[];
   visible: boolean = true;
-  constructor(
-    private installmentService: InstallmentService
-  ) { }
+
+  constructor(private installmentService: InstallmentService) { }
 
   ngOnInit(): void {
     this.fillInstallments();
   }
 
   onChangeInstallment() {
-    let numberInstallments = this.selectedInstallmentNumber.installmentNumber;
+    this.selectedInstallments = [];
+    for (let i in this.installments) {
+      if (this.installments[i].installmentNumber <= this.selectedInstallment.installmentNumber) {
+        this.selectedInstallments.push(this.installments[i]);
+      }
+    }
   }
 
   fillInstallments() {
@@ -68,4 +73,5 @@ export class InstallmentComponent implements OnInit {
     console.log('onDestroy');
     //quando fechar o componente
   }
+
 }

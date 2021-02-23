@@ -36,8 +36,6 @@ export class AttendanceComponent implements OnInit {
   typeOfPayment = Enum.get(TypeOfPayment);
   selectedStatus: Enum;
   selectedTypePayment: Enum;
-  // Installments: Installment[];
-  // selectedInstallmentNumber: Installment;
 
   constructor(
     private attendanceService: AttendanceService,
@@ -146,11 +144,7 @@ export class AttendanceComponent implements OnInit {
     this.clinicService.getClinicNameList().subscribe(clinics => (this.clinics = clinics));
   }
 
-  showInstallmentDialog() {
-    this.installmentDialog = true;
-  }
-
-  closeInstallmentDialog() {
-    this.installmentDialog = false;
+  handleInstallmentDialog() {
+    this.installmentDialog = this.installmentDialog ? false : true;
   }
 }

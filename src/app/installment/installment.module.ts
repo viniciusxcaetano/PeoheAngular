@@ -3,8 +3,8 @@
 // import { Routes, RouterModule } from '@angular/router';
 // import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-// import { InstallmentComponent } from "./installment/installment.component";
 // import { InstallmentService } from "./installment.service";
+// import { InstallmentListComponent } from "./installment-list/installment-list.component";
 
 // import { TableModule } from 'primeng/table';
 // import { SliderModule } from 'primeng/slider';
@@ -26,16 +26,15 @@
 // import { ToolbarModule } from 'primeng/toolbar';
 // import { FileUploadModule } from 'primeng/fileupload';
 // import { TabViewModule } from 'primeng/tabview';
-// import { AttendanceModule } from "../attendance/attendance.module";
 
-// const routes: Routes = [{ path: '', component: InstallmentComponent }];
+// const routes: Routes = [{ path: '', component: InstallmentListComponent }];
 
 // @NgModule({
 
-//     declarations: [InstallmentComponent],
-//     exports: [RouterModule, InstallmentComponent],
+//     declarations: [InstallmentListComponent],
+//     exports: [RouterModule, InstallmentListComponent],
 //     providers: [InstallmentService],
-//     bootstrap: [InstallmentComponent],
+//     bootstrap: [InstallmentListComponent],
 
 //     imports: [
 //         CommonModule,
@@ -63,9 +62,7 @@
 //         InputTextareaModule,
 //         ButtonModule,
 //         TabViewModule,
-//         DropdownModule,
-
-//         AttendanceModule
+//         DropdownModule
 //     ],
 // })
 

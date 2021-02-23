@@ -34,12 +34,13 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { ToolbarModule } from 'primeng/toolbar';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TabViewModule } from 'primeng/tabview';
+import { InstallmentListComponent } from "../installment/installment-list/installment-list.component";
 
 const routes: Routes = [{ path: '', component: AttendanceComponent }];
 
 @NgModule({
 
-  declarations: [AttendanceComponent, AttendanceDetailComponent, AttendanceListComponent, AttendanceDetailComponent, InstallmentComponent],
+  declarations: [AttendanceComponent, AttendanceDetailComponent, AttendanceListComponent, AttendanceDetailComponent, InstallmentComponent, InstallmentListComponent],
   exports: [RouterModule, AttendanceComponent],
   providers: [AttendanceService, ClinicService, InstallmentService],
   bootstrap: [AttendanceComponent, AttendanceDetailComponent, AttendanceListComponent, AttendanceDetailComponent],
