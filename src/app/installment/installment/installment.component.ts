@@ -70,7 +70,7 @@ export class InstallmentComponent implements OnInit {
   }
 
   saveInstallments() {
-
+    console.log('saveInstallments> ' + JSON.stringify(this.selectedInstallments));
   }
 
   ngOnDestroy() {

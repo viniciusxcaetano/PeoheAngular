@@ -2,7 +2,10 @@
     <!-- <div class="content">
     </div> -->
     <div class="p-formgrid p-grid">
-        <div class="p-field p-col"><label for="amount">Nº</label> {{installment.installmentNumber}}</div>
+        <div class="p-field p-col-fixed" style="width:50px;">
+            <label for="amount">Nº</label> 
+            <p-inputNumber [disabled]="true" [(ngModel)]="installment.installmentNumber"> </p-inputNumber>
+        </div>
         <div class="p-field p-col">
             <label for="amount">Valor da Parcela</label>
             <p-inputNumber id="amount" placeholder="R$" [(ngModel)]="installment.amount" mode="currency" currency="BRL"
@@ -10,7 +13,7 @@
         </div>
         <div class="p-field p-col">
             <label for="amount">Previsão da Data de Pagamento</label>
-            <p-calendar [(ngModel)]="installment.dueDate" [showIcon]="true"></p-calendar>
+            <p-calendar [(ngModel)]="installment.dueDate" [showIcon]="true" appendTo="body" ></p-calendar>
         </div>
     </div>
 </div>

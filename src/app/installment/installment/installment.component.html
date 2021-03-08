@@ -1,4 +1,4 @@
-<p-dialog [(visible)]="visible" [style]="{width: '350px'}" header="Ajuste das parcelas" [modal]="true"
+<p-dialog [(visible)]="visible" [style]="{width: '590px'}" header="Ajuste das parcelas" [modal]="true"
     styleClass="p-fluid" [closable]="false">
     <ng-template pTemplate="content">
         <div class="p-formgrid p-grid">
@@ -14,7 +14,7 @@
 
             </div>
         </div>
-        <ul class="list">
+        <ul class="list" style="padding-left: 0px;">
             <div *ngFor="let installment of selectedInstallments">
                 <div class="card">
                     <app-installment-list [installment]="installment">
