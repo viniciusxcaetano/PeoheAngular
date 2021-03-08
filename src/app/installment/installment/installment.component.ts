@@ -34,8 +34,12 @@ export class InstallmentComponent implements OnInit {
 
   onChangeInstallment() {
     this.selectedInstallments = [];
-    for (let i in this.installments) {
+    var days = 30;
+    for (var i = 0; i < this.installments.length; i++) {
       if (this.installments[i].installmentNumber <= this.selectedInstallment.installmentNumber) {
+        var today = new Date();
+        today.setMonth(today.getMonth() + i);
+        this.installments[i].dueDate = today;
         this.selectedInstallments.push(this.installments[i]);
       }
     }

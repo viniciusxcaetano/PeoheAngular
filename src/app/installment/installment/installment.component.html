@@ -15,13 +15,12 @@
             </div>
         </div>
         <ul class="list">
-            <li *ngFor="let installment of selectedInstallments">
+            <div *ngFor="let installment of selectedInstallments">
                 <div class="card">
-                    <app-installment-list [installmentNumber]="installment.installmentNumber"
-                        [amount]="installment.amount">
+                    <app-installment-list [installment]="installment">
                     </app-installment-list>
                 </div>
-            </li>
+            </div>
         </ul>
     </ng-template>
 

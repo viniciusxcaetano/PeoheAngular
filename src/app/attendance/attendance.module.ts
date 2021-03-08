@@ -11,6 +11,7 @@ import { AttendanceService } from './attendance.service';
 import { ClinicService } from '../clinic/clinic.service';
 
 import { InstallmentComponent } from "../installment/installment/installment.component";
+import { InstallmentListComponent } from "../installment/installment-list/installment-list.component";
 import { InstallmentService } from "../installment/installment.service";
 
 
@@ -34,7 +35,6 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { ToolbarModule } from 'primeng/toolbar';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TabViewModule } from 'primeng/tabview';
-import { InstallmentListComponent } from "../installment/installment-list/installment-list.component";
 
 const routes: Routes = [{ path: '', component: AttendanceComponent }];
 

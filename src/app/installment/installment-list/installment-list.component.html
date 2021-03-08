@@ -1,1 +1,16 @@
-<p>installment-list works!</p>
+<div class="card-content">
+    <!-- <div class="content">
+    </div> -->
+    <div class="p-formgrid p-grid">
+        <div class="p-field p-col"><label for="amount">Nº</label> {{installment.installmentNumber}}</div>
+        <div class="p-field p-col">
+            <label for="amount">Valor da Parcela</label>
+            <p-inputNumber id="amount" placeholder="R$" [(ngModel)]="installment.amount" mode="currency" currency="BRL"
+                locale="pt-BR"></p-inputNumber>
+        </div>
+        <div class="p-field p-col">
+            <label for="amount">Previsão da Data de Pagamento</label>
+            <p-calendar [(ngModel)]="installment.dueDate" [showIcon]="true"></p-calendar>
+        </div>
+    </div>
+</div>
