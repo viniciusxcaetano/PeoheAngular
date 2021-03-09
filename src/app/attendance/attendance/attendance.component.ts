@@ -117,7 +117,7 @@ export class AttendanceComponent implements OnInit {
     this.attendance.status = Object.keys(Status).indexOf(this.selectedStatus.key);
     this.attendance.typeOfPayment = Object.keys(TypeOfPayment).indexOf(this.selectedTypePayment.key);
     this.attendance.clinic = this.selectedClinic;
-    
+    this.attendance.installments = this.installments;
     if (this.attendance.attendanceId) {
       this.attendanceService.updateAttendance(this.attendance).subscribe(attendance => (this.attendance = attendance));
       const index = this.attendance ? this.attendances.findIndex(h => h.attendanceId === this.attendance.attendanceId) : -1;
