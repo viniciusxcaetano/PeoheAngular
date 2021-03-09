@@ -32,6 +32,7 @@ export class AttendanceComponent implements OnInit {
   clinics: Clinic[];
   selectedClinic: Clinic;
   attendance: Attendance;
+  tempAttendance: Attendance;
   submitted: boolean;
   status = Enum.get(Status);
   typeOfPayment = Enum.get(TypeOfPayment);
@@ -55,6 +56,7 @@ export class AttendanceComponent implements OnInit {
     this.selectedStatus = this.status[0];
     this.selectedTypePayment = null;
     this.attendance = {};
+    this.tempAttendance = {};
     this.submitted = false;
     this.attendanceDialog = true;
     this.showInstallmentBtn = false;
@@ -102,6 +104,8 @@ export class AttendanceComponent implements OnInit {
   }
   onChangeTypeOfPayment() {
     this.showInstallmentBtn = TypeOfPayment[this.selectedTypePayment.key] === TypeOfPayment.Credito ? true : false;
+    this.installments = null;
+    this.attendance.installmentsAmount = null;
   }
 
   getStatus(number: any) {
@@ -113,29 +117,31 @@ export class AttendanceComponent implements OnInit {
 
   saveAttendance() {
 
-    this.submitted = true;
-    this.attendance.status = Object.keys(Status).indexOf(this.selectedStatus.key);
-    this.attendance.typeOfPayment = Object.keys(TypeOfPayment).indexOf(this.selectedTypePayment.key);
-    this.attendance.clinic = this.selectedClinic;
-    this.attendance.installments = this.installments;
-    if (this.attendance.attendanceId) {
-      this.attendanceService.updateAttendance(this.attendance).subscribe(attendance => (this.attendance = attendance));
-      const index = this.attendance ? this.attendances.findIndex(h => h.attendanceId === this.attendance.attendanceId) : -1;
+    if (this.checkAttendanceChange()) {
+      this.submitted = true;
+      this.attendance.status = Object.keys(Status).indexOf(this.selectedStatus.key);
+      this.attendance.typeOfPayment = Object.keys(TypeOfPayment).indexOf(this.selectedTypePayment.key);
+      this.attendance.clinic = this.selectedClinic;
+      this.attendance.installments = this.installments;
+      if (this.attendance.attendanceId) {
+        this.attendanceService.updateAttendance(this.attendance).subscribe(attendance => (this.attendance = attendance));
+        const index = this.attendance ? this.attendances.findIndex(h => h.attendanceId === this.attendance.attendanceId) : -1;
 
-      if (index > -1) {
-        this.attendances[index] = this.attendance;
+        if (index > -1) {
+          this.attendances[index] = this.attendance;
+        }
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Atendimento Atualizado', life: 3000 });
       }
-      this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Atendimento Atualizado', life: 3000 });
+      else {
+        this.attendanceService.createAttendance(this.attendance).subscribe(attendance => (this.attendance = attendance));
+        this.attendances.push(this.attendance);
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Atendimento Criado', life: 3000 });
+      }
+      this.attendances = [...this.attendances];
+      this.attendanceDialog = false;
+      this.selectedClinic = {};
+      this.attendance = {};
     }
-    else {
-      this.attendanceService.createAttendance(this.attendance).subscribe(attendance => (this.attendance = attendance));
-      this.attendances.push(this.attendance);
-      this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Atendimento Criado', life: 3000 });
-    }
-    this.attendances = [...this.attendances];
-    this.attendanceDialog = false;
-    this.selectedClinic = {};
-    this.attendance = {};
   }
 
   getAttendances(): void {
@@ -151,7 +157,19 @@ export class AttendanceComponent implements OnInit {
   }
 
   saveInstallments(Installments: Installment[]) {
+    this.tempAttendance = { ...this.attendance };
     Installments.forEach(installment => delete installment.formattedInstallment);
     this.installments = Installments;
+    this.attendance.installmentsAmount = this.installments.length;
+  }
+
+  checkAttendanceChange(): boolean {
+    if (TypeOfPayment[this.selectedTypePayment.key] === TypeOfPayment.Credito && (this.attendance.amount != this.tempAttendance.amount || this.attendance.amountPaid != this.tempAttendance.amountPaid)) {
+      this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'É preciso ajustar novamente as parcelas' });
+      return false;
+    }
+    else {
+      return true;
+    }
   }
 }
