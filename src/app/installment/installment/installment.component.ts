@@ -21,6 +21,8 @@ export class InstallmentComponent implements OnInit {
 
   @Input() attendance: Attendance;
   @Output() unselect = new EventEmitter<string>();
+  @Output() outPutSelectedInstallments = new EventEmitter<Installment[]>();
+  
   installments: Installment[];
   selectedInstallment: Installment;
   selectedInstallments: Installment[];
@@ -70,7 +72,8 @@ export class InstallmentComponent implements OnInit {
   }
 
   saveInstallments() {
-    console.log('saveInstallments> ' + JSON.stringify(this.selectedInstallments));
+    this.outPutSelectedInstallments.emit(this.selectedInstallments);
+    this.unselect.emit();
   }
 
   ngOnDestroy() {

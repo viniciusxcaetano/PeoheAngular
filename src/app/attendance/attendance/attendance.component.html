@@ -141,7 +141,9 @@
     <app-installment 
     *ngIf="installmentDialog"
     [attendance]="attendance"
-    (unselect)="handleInstallmentDialog()">
+    (unselect)="handleInstallmentDialog()"
+    (outPutSelectedInstallments)="saveInstallments($event)"
+    >
     </app-installment>
 
   <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

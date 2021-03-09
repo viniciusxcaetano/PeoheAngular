@@ -6,6 +6,7 @@ import { Status, TypeOfPayment } from 'src/app/model/enum/Attendance';
 import { Enum } from 'src/app/shared/enum';
 import { ClinicService } from 'src/app/clinic/clinic.service';
 import { Clinic } from 'src/app/model/Clinic';
+import { Installment } from 'src/app/model/Installment';
 // import { Installment } from 'src/app/model/Installment';
 
 @Component({
@@ -36,6 +37,7 @@ export class AttendanceComponent implements OnInit {
   typeOfPayment = Enum.get(TypeOfPayment);
   selectedStatus: Enum;
   selectedTypePayment: Enum;
+  installments: Installment[];
 
   constructor(
     private attendanceService: AttendanceService,
@@ -112,10 +114,10 @@ export class AttendanceComponent implements OnInit {
   saveAttendance() {
 
     this.submitted = true;
-    this.attendance.status = this.selectedStatus.key as Status;
-    this.attendance.typeOfPayment = this.selectedTypePayment.key as TypeOfPayment;
+    this.attendance.status = Object.keys(Status).indexOf(this.selectedStatus.key);
+    this.attendance.typeOfPayment = Object.keys(TypeOfPayment).indexOf(this.selectedTypePayment.key);
     this.attendance.clinic = this.selectedClinic;
-
+    
     if (this.attendance.attendanceId) {
       this.attendanceService.updateAttendance(this.attendance).subscribe(attendance => (this.attendance = attendance));
       const index = this.attendance ? this.attendances.findIndex(h => h.attendanceId === this.attendance.attendanceId) : -1;
@@ -146,5 +148,10 @@ export class AttendanceComponent implements OnInit {
 
   handleInstallmentDialog() {
     this.installmentDialog = this.installmentDialog ? false : true;
+  }
+
+  saveInstallments(Installments: Installment[]) {
+    Installments.forEach(installment => delete installment.formattedInstallment);
+    this.installments = Installments;
   }
 }

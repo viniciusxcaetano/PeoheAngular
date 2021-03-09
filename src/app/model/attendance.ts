@@ -12,9 +12,9 @@ export class Attendance {
 
     attendanceId?: string;
     name?: string;
-    status?: Status;
+    status?: number;
     description?: string;
-    typeOfPayment?: TypeOfPayment;
+    typeOfPayment?: number;
     amount?: number;
     amountPaid?: number;
     percentage?: number;
