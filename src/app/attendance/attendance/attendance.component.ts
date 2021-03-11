@@ -7,20 +7,19 @@ import { Enum } from 'src/app/shared/enum';
 import { ClinicService } from 'src/app/clinic/clinic.service';
 import { Clinic } from 'src/app/model/Clinic';
 import { Installment } from 'src/app/model/Installment';
-// import { Installment } from 'src/app/model/Installment';
 
 @Component({
   selector: 'app-attendance',
   templateUrl: './attendance.component.html',
   styleUrls: ['./attendance.component.scss'],
+  providers: [MessageService, ConfirmationService],
   styles: [`
     :host ::ng-deep .p-dialog {
         width: 150px;
         margin: 0 auto 2rem auto;
         display: block;
     }
-`],
-  providers: [MessageService, ConfirmationService]
+`]
 })
 export class AttendanceComponent implements OnInit {
 
@@ -103,9 +102,15 @@ export class AttendanceComponent implements OnInit {
     this.submitted = false;
   }
   onChangeTypeOfPayment() {
-    this.showInstallmentBtn = TypeOfPayment[this.selectedTypePayment.key] === TypeOfPayment.Credito ? true : false;
+    this.showInstallmentBtn = this.attendance.amount && this.selectedTypePayment && TypeOfPayment[this.selectedTypePayment.key] === TypeOfPayment.Credito ? true : false;
     this.installments = null;
     this.attendance.installmentsAmount = null;
+  }
+
+  onChangeAmount(amount) {
+    this.attendance.amount = amount ?? null;
+    this.showInstallmentBtn = amount && this.selectedTypePayment && TypeOfPayment[this.selectedTypePayment.key] === TypeOfPayment.Credito ? true : false;
+
   }
 
   getStatus(number: any) {
@@ -123,6 +128,7 @@ export class AttendanceComponent implements OnInit {
       this.attendance.typeOfPayment = Object.keys(TypeOfPayment).indexOf(this.selectedTypePayment.key);
       this.attendance.clinic = this.selectedClinic;
       this.attendance.installments = this.installments;
+
       if (this.attendance.attendanceId) {
         this.attendanceService.updateAttendance(this.attendance).subscribe(attendance => (this.attendance = attendance));
         const index = this.attendance ? this.attendances.findIndex(h => h.attendanceId === this.attendance.attendanceId) : -1;

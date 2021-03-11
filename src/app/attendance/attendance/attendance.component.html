@@ -11,7 +11,7 @@
       </ng-template>
 
       <ng-template pTemplate="right">
-        <button pButton pRipple label="Nova" icon="pi pi-plus" class="p-button-success p-mr-2"
+        <button pButton pRipple label="Novo Atendimento" icon="pi pi-plus" class="p-button-success p-mr-2"
           (click)="openNew()"></button>
         <button pButton pRipple icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedAttendances()"
           [disabled]="!selectedAttendances || !selectedAttendances.length"></button>
@@ -103,7 +103,7 @@
         <div class="p-field p-col">
           <label for="amount">Valor</label>
           <p-inputNumber id="amount" placeholder="R$" [(ngModel)]="attendance.amount" mode="currency" currency="BRL"
-            locale="pt-BR"></p-inputNumber>
+            locale="pt-BR" (onInput)="onChangeAmount($event.value)"></p-inputNumber>
         </div>
         <div class="p-field p-col">
           <label for="amount">Valor Pago</label>
